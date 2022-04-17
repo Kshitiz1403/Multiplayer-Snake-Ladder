@@ -1,11 +1,12 @@
 import logo from './logo.svg';
-import './App.css';
 import Board from './Board';
+import Dice from './Dice';
 
 function App() {
   return (
-    <div className="App">
+    <div style={{display:'flex'}}>
       <Board/>
+      <Dice/>
     </div>
   );
 }
