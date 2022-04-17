@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
-import dice0 from './assets/dice.svg'
-import dice1 from './assets/dice-one.svg'
-import dice2 from './assets/dice-two.svg'
-import dice3 from './assets/dice-three.svg'
-import dice4 from './assets/dice-four.svg'
-import dice5 from './assets/dice-five.svg'
-import dice6 from './assets/dice-six.svg'
+import dice0 from './assets/dice/dice.svg'
+import dice1 from './assets/dice/dice-one.svg'
+import dice2 from './assets/dice/dice-two.svg'
+import dice3 from './assets/dice/dice-three.svg'
+import dice4 from './assets/dice/dice-four.svg'
+import dice5 from './assets/dice/dice-five.svg'
+import dice6 from './assets/dice/dice-six.svg'
 
 const Dice = () => {
 
