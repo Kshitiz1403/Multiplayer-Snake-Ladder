@@ -1,10 +1,10 @@
-import Board from './Board';
-import Dice from './Dice';
+import Board from './Board/Board';
+import Dice from './Dice/Dice';
 import { LayoutProvider } from './contexts/LayoutContext';
 import { PositionProvider } from './contexts/PositionContext';
-import Player from './Player';
+import Player from './Player/Player';
 import { VictoryProvider } from './contexts/VictoryContext';
-import { Pages } from './Pages';
+import { Pages } from './Pages/Pages';
 import './App.css'
 
 

@@ -1,7 +1,8 @@
 import React, { useContext, useEffect, useLayoutEffect, useState } from 'react'
-import { laders, snakes } from './config'
-import { DispatchLayoutContext, LayoutContext } from './contexts/LayoutContext'
-import { PositionContext } from './contexts/PositionContext'
+import { laders, snakes } from '../config'
+import { DispatchLayoutContext, LayoutContext } from '../contexts/LayoutContext'
+import { PositionContext } from '../contexts/PositionContext'
+import stylesheet from './Board.module.css'
 
 const Board = () => {
 
@@ -31,17 +32,8 @@ const Board = () => {
         squares.push(horizontal)
     }
 
-    const styles = {
-        squareStyles: {
-            borderColor: 'black', borderWidth: 1, borderStyle: 'solid', display: 'flex', justifyContent: 'center', alignItems: 'center', position: 'relative'
-        },
-        horizontalStyles: {
-            display: 'flex', justifyContent: 'space-around'
-        }
-    }
-
     const Square = ({ square, snakes, laders, styles }) => (
-        <div style={{ ...styles }}>
+        <div className={stylesheet.squareStyles} style={{...styles}}>
             <div style={{ fontSize: squareDimension * 0.25 }}>{location + 1 != square ? square : null}</div>
             <div style={{ position: 'absolute', right: 0, bottom: 0 }}>
                 {snakes.map(snake => snake.from == square ? <div style={{ color: 'red', fontSize: squareDimension * 0.25 }} key={snake}>S{snake.to}</div> : null
@@ -55,11 +47,11 @@ const Board = () => {
         <div>
             <div style={{ height: windowHeight, aspectRatio: 1 }}>
                 {squares.map((horizontalArr, horIndex) =>
-                    <div style={{ ...styles.horizontalStyles }} key={horIndex}>
+                    <div className={stylesheet.horizontalStyles} key={horIndex}>
                         {horizontalArr.map((square, index) =>
                             <Square
                                 key={horIndex * 10 + index}
-                                styles={{ ...styles.squareStyles, aspectRatio: 1, width: '100%', backgroundColor: (horIndex % 2 == 0 && index % 2 == 1) ? '#ffef85' : (horIndex % 2 == 1 && index % 2 == 0) ? '#ffef85' : '#f9a500' }}
+                                styles={{ aspectRatio: 1, width: '100%', backgroundColor: (horIndex % 2 == 0 && index % 2 == 1) ? '#ffef85' : (horIndex % 2 == 1 && index % 2 == 0) ? '#ffef85' : '#f9a500' }}
                                 snakes={snakes}
                                 laders={laders}
                                 square={square}

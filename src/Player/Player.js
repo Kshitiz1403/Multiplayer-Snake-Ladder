@@ -1,13 +1,15 @@
 import React, { useContext, useEffect, useState } from 'react'
-import player1 from './assets/player/mummy-head.svg'
-import player2 from './assets/player/cleopatra.svg'
-import player3 from './assets/player/monk-face.svg'
-import player4 from './assets/player/goblin-head.svg'
-import player5 from './assets/player/female-vampire.svg'
-import { LayoutContext } from './contexts/LayoutContext'
-import { DispatchPositionContext, PositionContext } from './contexts/PositionContext'
-import { laders, snakes } from './config'
-import { VictoryContext } from './contexts/VictoryContext'
+import player1 from '../assets/player/mummy-head.svg'
+import player2 from '../assets/player/cleopatra.svg'
+import player3 from '../assets/player/monk-face.svg'
+import player4 from '../assets/player/goblin-head.svg'
+import player5 from '../assets/player/female-vampire.svg'
+import { LayoutContext } from '../contexts/LayoutContext'
+import { DispatchPositionContext, PositionContext } from '../contexts/PositionContext'
+import { laders, snakes } from '../config'
+import { VictoryContext } from '../contexts/VictoryContext'
+import stylesheet from './Player.module.css'
+
 const Player = () => {
     const { squareDimension } = useContext(LayoutContext)
     const { dice, location, coordinates } = useContext(PositionContext)
@@ -15,7 +17,7 @@ const Player = () => {
     const { won } = useContext(VictoryContext)
 
     const Character = () => (
-        <div style={{ width: squareDimension, height: squareDimension, display: 'flex', justifyContent: 'center', alignItems: 'center', zoom: 0.6, padding: squareDimension * 0.4 }}>
+        <div className={stylesheet.character} style={{ width: squareDimension, height: squareDimension, padding: squareDimension * 0.4 }}>
             <img src={player5} />
         </div>
     )
@@ -62,7 +64,7 @@ const Player = () => {
         dispatchCoordinates({ type: "UPDATE", payload: { horizontal: horizontalCor, vertical: verticalCor } })
     }
     return (
-        <div style={{ position: 'absolute', bottom: squareDimension * coordinates.vertical, left: squareDimension * coordinates.horizontal }}>
+        <div className={stylesheet.container} style={{ bottom: squareDimension * coordinates.vertical, left: squareDimension * coordinates.horizontal }}>
             <Character />
         </div>
     )
