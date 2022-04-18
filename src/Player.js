@@ -1,31 +1,45 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import player1 from './assets/player/mummy-head.svg'
 import player2 from './assets/player/cleopatra.svg'
+import player3 from './assets/player/monk-face.svg'
+import player4 from './assets/player/goblin-head.svg'
+import player5 from './assets/player/female-vampire.svg'
 import { LayoutContext } from './contexts/LayoutContext'
-import { PositionContext } from './contexts/PositionContext'
+import { DispatchPositionContext, PositionContext } from './contexts/PositionContext'
 const Player = () => {
-    const { squareDimension, changeWindowHeight, windowHeight } = useContext(LayoutContext)
-    const { dice, location, dispatchLocation } = useContext(PositionContext)
+    const { squareDimension } = useContext(LayoutContext)
+    const { dice, location, coordinates } = useContext(PositionContext)
+    const { dispatchLocation, dispatchCoordinates } = useContext(DispatchPositionContext)
+
 
     const Character = () => (
         <div style={{ width: squareDimension, height: squareDimension, display: 'flex', justifyContent: 'center', alignItems: 'center', zoom: 0.6, padding: squareDimension * 0.4 }}>
-            <img src={player1} />
+            <img src={player5} />
         </div>
     )
+
     useEffect(() => {
-        dispatchLocation({ type: "INCREMENT", value: dice })
+        if (dice.value + location + 1 > 100) {
+            return
+        }
+        dispatchLocation({ type: "INCREMENT", value: dice.value })
     }, [dice])
 
-    const movementHandler = (coordinates) => {
-        const verticalCor = Math.floor(coordinates / 10)
+    useEffect(() => {
+        movementHandler(location)
+    }, [location])
+
+
+    const movementHandler = (location) => {
+        const verticalCor = Math.floor(location / 10)
         let horizontalCor
-        if (verticalCor % 2 == 1) { horizontalCor = 9 - coordinates % 10 }
-        else { horizontalCor = coordinates % 10 }
-        // }
-        return { horizontalCor, verticalCor }
+        if (verticalCor % 2 == 1) { horizontalCor = 9 - location % 10 }
+        else { horizontalCor = location % 10 }
+
+        dispatchCoordinates({ type: "UPDATE", payload: { horizontal: horizontalCor, vertical: verticalCor } })
     }
     return (
-        <div style={{ position: 'absolute', bottom: squareDimension * movementHandler(location).verticalCor, left: squareDimension * movementHandler(location).horizontalCor }}>
+        <div style={{ position: 'absolute', bottom: squareDimension * coordinates.vertical, left: squareDimension * coordinates.horizontal }}>
             <Character />
         </div>
     )

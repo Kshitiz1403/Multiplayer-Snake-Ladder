@@ -1,10 +1,14 @@
 import React, { useContext, useEffect, useLayoutEffect, useState } from 'react'
 import { laders, snakes } from './config'
-import { LayoutContext } from './contexts/LayoutContext'
+import { DispatchLayoutContext, LayoutContext } from './contexts/LayoutContext'
+import { PositionContext } from './contexts/PositionContext'
 
 const Board = () => {
 
-    const { squareDimension, changeWindowHeight, windowHeight } = useContext(LayoutContext)
+    const { squareDimension, windowHeight } = useContext(LayoutContext)
+    const {changeWindowHeight} = useContext(DispatchLayoutContext)
+
+    const { location } = useContext(PositionContext)
 
     useLayoutEffect(() => {
         const updateSize = () => {
@@ -38,16 +42,15 @@ const Board = () => {
 
     const Square = ({ square, snakes, laders, styles }) => (
         <div style={{ ...styles }}>
-            <div style={{ fontSize: squareDimension * 0.25 }}>{square}</div>
+            <div style={{ fontSize: squareDimension * 0.25 }}>{location + 1 != square ? square : null}</div>
             <div style={{ position: 'absolute', right: 0, bottom: 0 }}>
-                {snakes.map(snake => snake.from == square ? <div style={{ color: 'red' , fontSize: squareDimension * 0.25}} key={snake}>S{snake.to}</div> : null
+                {snakes.map(snake => snake.from == square ? <div style={{ color: 'red', fontSize: squareDimension * 0.25 }} key={snake}>S{snake.to}</div> : null
                 )}
                 {laders.map(lader => lader.from == square ? <div style={{ color: 'blue', fontSize: squareDimension * 0.25 }} key={lader}>L{lader.to}</div> : null)}
             </div>
         </div>
     )
 
-    
     return (
         <div>
             <div style={{ height: windowHeight, aspectRatio: 1 }}>
