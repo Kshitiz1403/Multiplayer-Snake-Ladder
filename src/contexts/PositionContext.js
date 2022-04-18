@@ -1,5 +1,4 @@
-import React, { createContext, useReducer, useState } from 'react'
-import coordinateReducer from '../reducers/coordinateReducer';
+import React, { createContext, useEffect, useReducer, useState } from 'react'
 import diceReducer from '../reducers/diceReducer';
 import movementReducer from '../reducers/movementReducer';
 
@@ -7,17 +6,21 @@ export const PositionContext = createContext();
 export const DispatchPositionContext = createContext();
 
 export const PositionProvider = (props) => {
-    const [dice, dispatchDice] = useReducer(diceReducer, { value: 0, temp: 0 })
-    const [location, dispatchLocation] = useReducer(movementReducer, -1)
-    // const [coordinates, setCoordinates] = useState({ horizontal: -1, vertical: 0 })
+    const [dice, dispatchDice] = useReducer(diceReducer, { value: 0, count: 0 })
 
-    // const updateCoordinates = (horizontal, vertical) => {
-    //     setCoordinates({ horizontal, vertical })
-    // }
-    const [coordinates, dispatchCoordinates] = useReducer(coordinateReducer, { horizontal: -1, vertical: 0 })
+    const [coordinates, dispatchCoordinates] = useReducer(movementReducer, { location: -1, diceValue: 0, horizontal: -1, vertical: 0 })
+
+    useEffect(() => {
+      console.log("dice re render")
+    }, [dice])
+
+    useEffect(() => {
+      console.log("coordinates re render")
+    }, [coordinates])
+    
     return (
-        <PositionContext.Provider value={{ dice, location, coordinates }}>
-            <DispatchPositionContext.Provider value={{ dispatchDice, dispatchLocation, dispatchCoordinates }}>
+        <PositionContext.Provider value={{ dice, coordinates }}>
+            <DispatchPositionContext.Provider value={{ dispatchDice,  dispatchCoordinates }}>
                 {props.children}
             </DispatchPositionContext.Provider>
         </PositionContext.Provider>

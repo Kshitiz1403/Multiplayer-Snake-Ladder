@@ -1,14 +1,41 @@
 const movementReducer = (state, action) => {
-    switch (action.type) {
-        case "INCREMENT":
-            return state + action.value
-        case "DECREMENT":
-            return state - action.value
-        case "TO":
-            return action.value;
-        default:
-            return state
+    let {location} = state
+    let {horizontal} = state
+    let {vertical} = state
+    let diceValue = action.diceValue
+    let snakes = action.snakes
+    let laders = action.laders
+    let newLocation
+
+    if (diceValue + location + 1 > 100) {
+        return { location, diceValue, horizontal, vertical }
     }
+
+    let boolean = false
+    for (const snake of snakes) {
+        if (diceValue + location + 1 == snake.from) {
+            newLocation = snake.to - 1
+            boolean = true
+            break
+        }
+    }
+    for (const lader of laders) {
+        if (diceValue + location + 1 == lader.from) {
+            newLocation = lader.to - 1
+            boolean = true
+            break
+        }
+    }
+    if (boolean) {
+
+    } else {
+        newLocation = location + diceValue
+    }
+    vertical = Math.floor(newLocation / 10)
+    if (vertical % 2 == 1) horizontal = 9 - newLocation % 10
+    else horizontal = newLocation % 10
+
+    return { location: newLocation, diceValue, horizontal, vertical }
 }
 
 export default movementReducer

@@ -8,61 +8,40 @@ import { LayoutContext } from '../contexts/LayoutContext'
 import { DispatchPositionContext, PositionContext } from '../contexts/PositionContext'
 import { laders, snakes } from '../config'
 import { VictoryContext } from '../contexts/VictoryContext'
+import { UserContext } from '../contexts/UserContext'
 import stylesheet from './Player.module.css'
 
 const Player = () => {
     const { squareDimension } = useContext(LayoutContext)
-    const { dice, location, coordinates } = useContext(PositionContext)
-    const { dispatchLocation, dispatchCoordinates } = useContext(DispatchPositionContext)
+    const { dice, coordinates } = useContext(PositionContext)
+    const { dispatchCoordinates } = useContext(DispatchPositionContext)
     const { won } = useContext(VictoryContext)
+    const { myPlayerID } = useContext(UserContext)
+
+    const getPlayerSVG = (playerID) => {
+        switch (playerID) {
+            case 1:
+                return player1
+            case 2:
+                return player2
+        }
+    }
 
     const Character = () => (
         <div className={stylesheet.character} style={{ width: squareDimension, height: squareDimension, padding: squareDimension * 0.4 }}>
-            <img src={player5} />
+            <img src={getPlayerSVG(myPlayerID)} />
         </div>
     )
 
     useEffect(() => {
-        if (dice.value + location + 1 > 100) {
-            return
-        }
-        let boolean = false
-        for (const snake of snakes) {
-            if (dice.value + location + 1 == snake.from) {
-                dispatchLocation({ type: "TO", value: snake.to - 1 })
-                boolean = true
-                break
-            }
-        }
-        for (const lader of laders) {
-            if (dice.value + location + 1 == lader.from) {
-                dispatchLocation({ type: "TO", value: lader.to - 1 })
-                boolean = true
-                break
-            }
-        }
-        if (boolean == true) return;
-
-        dispatchLocation({ type: "INCREMENT", value: dice.value })
+        dispatchCoordinates({ diceValue: dice.value, snakes, laders })
     }, [dice])
 
     useEffect(() => {
-        if (location == 99) {
-            // show victory model
-            won(true)
-        }
-        movementHandler(location)
-    }, [location])
+        if (coordinates.location == 99) won()
+    }, [coordinates])
 
 
-    const movementHandler = (location) => {
-        const verticalCor = Math.floor(location / 10)
-        let horizontalCor
-        if (verticalCor % 2 == 1) { horizontalCor = 9 - location % 10 }
-        else { horizontalCor = location % 10 }
-
-        dispatchCoordinates({ type: "UPDATE", payload: { horizontal: horizontalCor, vertical: verticalCor } })
-    }
     return (
         <div className={stylesheet.container} style={{ bottom: squareDimension * coordinates.vertical, left: squareDimension * coordinates.horizontal }}>
             <Character />
