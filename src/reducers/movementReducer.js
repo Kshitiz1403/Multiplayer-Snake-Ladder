@@ -4,6 +4,8 @@ const movementReducer = (state, action) => {
             return state + action.value
         case "DECREMENT":
             return state - action.value
+        case "TO":
+            return action.value;
         default:
             return state
     }
