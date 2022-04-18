@@ -1,12 +1,13 @@
 import React, { useContext, useState } from 'react'
-import dice0 from './assets/dice/dice.svg'
-import dice1 from './assets/dice/dice-one.svg'
-import dice2 from './assets/dice/dice-two.svg'
-import dice3 from './assets/dice/dice-three.svg'
-import dice4 from './assets/dice/dice-four.svg'
-import dice5 from './assets/dice/dice-five.svg'
-import dice6 from './assets/dice/dice-six.svg'
-import { DispatchPositionContext, PositionContext } from './contexts/PositionContext'
+import dice0 from '../assets/dice/dice.svg'
+import dice1 from '../assets/dice/dice-one.svg'
+import dice2 from '../assets/dice/dice-two.svg'
+import dice3 from '../assets/dice/dice-three.svg'
+import dice4 from '../assets/dice/dice-four.svg'
+import dice5 from '../assets/dice/dice-five.svg'
+import dice6 from '../assets/dice/dice-six.svg'
+import { DispatchPositionContext } from '../contexts/PositionContext'
+import stylesheet from './Dice.module.css'
 
 const Dice = () => {
 
@@ -45,7 +46,7 @@ const Dice = () => {
     const [activeDice, setActiveDice] = useState(dice0)
 
     return (
-        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%' }}>
+        <div className={stylesheet.container}>
             <div onClick={rollDice}>
                 <img src={activeDice} width='200px' />
             </div>

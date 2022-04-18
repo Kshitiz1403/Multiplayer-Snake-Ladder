@@ -1,0 +1,10 @@
+.squareStyles{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+.horizontalStyles{
+    display: flex;
+    justify-content: space-around;
+}
