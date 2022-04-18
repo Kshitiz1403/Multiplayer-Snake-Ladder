@@ -1,12 +1,19 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useLayoutEffect, useState } from 'react'
 import { laders, snakes } from './config'
+import { LayoutContext } from './contexts/LayoutContext'
 
 const Board = () => {
-    useEffect(() => {
-        setWindowHeight(window.innerHeight)
-    }, [])
 
-    const [windowHeight, setWindowHeight] = useState(0);
+    const { squareDimension, changeWindowHeight, windowHeight } = useContext(LayoutContext)
+
+    useLayoutEffect(() => {
+        const updateSize = () => {
+            changeWindowHeight(window.innerHeight)
+        }
+        window.addEventListener('resize', updateSize)
+        updateSize()
+        return () => window.removeEventListener('resize', updateSize)
+    }, [])
 
     const squares = []
     for (let i = 9; i >= 0; i--) {
@@ -31,15 +38,16 @@ const Board = () => {
 
     const Square = ({ square, snakes, laders, styles }) => (
         <div style={{ ...styles }}>
-            <div>{square}</div>
+            <div style={{ fontSize: squareDimension * 0.25 }}>{square}</div>
             <div style={{ position: 'absolute', right: 0, bottom: 0 }}>
-                {snakes.map(snake => snake.from == square ? <div style={{ color: 'red' }} key={snake}>S{snake.to}</div> : null
+                {snakes.map(snake => snake.from == square ? <div style={{ color: 'red' , fontSize: squareDimension * 0.25}} key={snake}>S{snake.to}</div> : null
                 )}
-                {laders.map(lader => lader.from == square ? <div style={{ color: 'blue' }} key={lader}>L{lader.to}</div> : null)}
+                {laders.map(lader => lader.from == square ? <div style={{ color: 'blue', fontSize: squareDimension * 0.25 }} key={lader}>L{lader.to}</div> : null)}
             </div>
         </div>
     )
 
+    
     return (
         <div>
             <div style={{ height: windowHeight, aspectRatio: 1 }}>
@@ -47,7 +55,7 @@ const Board = () => {
                     <div style={{ ...styles.horizontalStyles }} key={horIndex}>
                         {horizontalArr.map((square, index) =>
                             <Square
-                                key={index}
+                                key={horIndex * 10 + index}
                                 styles={{ ...styles.squareStyles, aspectRatio: 1, width: '100%', backgroundColor: (horIndex % 2 == 0 && index % 2 == 1) ? '#ffef85' : (horIndex % 2 == 1 && index % 2 == 0) ? '#ffef85' : '#f9a500' }}
                                 snakes={snakes}
                                 laders={laders}
@@ -55,7 +63,6 @@ const Board = () => {
                             />
                         )}
                     </div>)}
-
             </div>
         </div>
     )
