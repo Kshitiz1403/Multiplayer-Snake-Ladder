@@ -6,13 +6,13 @@ import Player from './Player/Player';
 import { VictoryProvider } from './contexts/VictoryContext';
 import { Game } from './Game/Game';
 import './App.css'
-import openSocket from 'socket.io-client';
+import io from 'socket.io-client';
 import { useEffect } from 'react';
 import { JoinRoom } from './JoinRoom';
 import { UserProvider } from './contexts/UserContext';
 import StartGame from './StartGame';
 
-export const socket = openSocket('http://localhost:5000')
+export const socket = io('http://localhost:5000')
 function App() {
   useEffect(() => {
     // socket.on('init', (msg) => {
@@ -20,6 +20,7 @@ function App() {
     // })
     // socket.on('msg', msg =>
     //   console.log(msg))
+    
   }, [])
 
   return (

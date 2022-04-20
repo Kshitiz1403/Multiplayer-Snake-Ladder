@@ -8,29 +8,34 @@ export const JoinRoom = () => {
     const { changeRoomID, roomID, players, changePlayers } = useContext(UserContext);
 
     const [tempRoomID, setTempRoomID] = useState('')
+    const [tempUserName, setTempUserName] = useState('')
 
-    const joinOrCreateRoom = (tempRoomID) => {
-        socket.emit('join_room', tempRoomID, (status) => {
-            if (status) {
-                changeRoomID(tempRoomID)
-            }
-        })
+    const joinOrCreateRoom = (tempUserName, tempRoomID) => {
+        socket.emit('join_room', { userName: tempUserName, room: tempRoomID })
+        changeRoomID(tempRoomID)
+        socket.on('roomUsers', data=>console.log(data))
+        // socket.emit('updates', -1, 1)
     }
-    socket.on('total', data => changePlayers(data.length))
 
+    // socket.on('total', data => changePlayers(data.length))
 
 
     return (
-        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', zoom: 3 }}>
             <div>
                 Enter Room ID
             </div>
             <div>
                 <form onSubmit={(e) => {
                     e.preventDefault();
-                    joinOrCreateRoom(tempRoomID)
+                    joinOrCreateRoom(tempUserName, tempRoomID)
                 }} >
-                    <input value={tempRoomID} onChange={v => setTempRoomID(v.target.value)} />
+                    <div>
+                        <input placeholder='roomid' value={tempRoomID} onChange={v => setTempRoomID(v.target.value)} />
+                    </div>
+                    <div>
+                        <input placeholder='username' value={tempUserName} onChange={v => setTempUserName(v.target.value)} />
+                    </div>
                     <button type='submit'>Join</button>
                 </form>
             </div>

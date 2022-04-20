@@ -10,11 +10,13 @@ import { laders, snakes } from '../config'
 import { VictoryContext } from '../contexts/VictoryContext'
 import { UserContext } from '../contexts/UserContext'
 import stylesheet from './Player.module.css'
+import { socket } from '../App'
+import { paintGame } from '../paintGame'
 
 const Player = () => {
     const { squareDimension } = useContext(LayoutContext)
-    const { dice, coordinates } = useContext(PositionContext)
-    const { dispatchCoordinates } = useContext(DispatchPositionContext)
+    const { dice, myCoordinates, enemyCoordinates } = useContext(PositionContext)
+    const { dispatchMyCoordinates, dispatchEnemyCoordinates, changeEnemyCoordinates, changeMyCoordinates } = useContext(DispatchPositionContext)
     const { won } = useContext(VictoryContext)
     const { myPlayerID } = useContext(UserContext)
 
@@ -27,24 +29,50 @@ const Player = () => {
         }
     }
 
-    const Character = () => (
+    const Character = ({ playerImg }) => (
         <div className={stylesheet.character} style={{ width: squareDimension, height: squareDimension, padding: squareDimension * 0.4 }}>
-            <img src={getPlayerSVG(myPlayerID)} />
+            <img src={playerImg} />
         </div>
     )
 
     useEffect(() => {
-        dispatchCoordinates({ diceValue: dice.value, snakes, laders })
+        const { location, diceValue, horizontal, vertical } = paintGame({ location: myCoordinates.location, diceValue: dice.value, snakes, laders, horizontal: myCoordinates.horizontal, vertical: myCoordinates.vertical })
+
+        socket.emit('send-update', myCoordinates.location, diceValue)
+
+        changeMyCoordinates({ location, diceValue, horizontal, vertical })
+
     }, [dice])
 
     useEffect(() => {
-        if (coordinates.location == 99) won()
-    }, [coordinates])
+        const receiveHandler = ({ location, dice }) => {
+            let paintData = paintGame({ location, diceValue: dice, snakes, laders, horizontal: enemyCoordinates.horizontal, vertical: enemyCoordinates.vertical })
+            changeEnemyCoordinates({ location: paintData.location, diceValue: paintData.diceValue, horizontal: paintData.horizontal, vertical: paintData.vertical })
+        }
+        socket.on('receive-update', receiveHandler);
 
+        return () => socket.off('receive-update', receiveHandler)
+    }, [socket])
+
+
+    useEffect(() => {
+        if (myCoordinates.location == 99) won()
+        
+    }, [myCoordinates])
+
+    useEffect(() => {
+        if (enemyCoordinates.location == 99) won()
+    }, [enemyCoordinates])
 
     return (
-        <div className={stylesheet.container} style={{ bottom: squareDimension * coordinates.vertical, left: squareDimension * coordinates.horizontal }}>
-            <Character />
+        <div>
+
+            <div className={stylesheet.container} style={{ bottom: squareDimension * myCoordinates.vertical, left: squareDimension * myCoordinates.horizontal }}>
+                <Character playerImg={getPlayerSVG(1)} />
+            </div>
+            <div className={stylesheet.container} style={{ bottom: squareDimension * enemyCoordinates.vertical, left: squareDimension * enemyCoordinates.horizontal }}>
+                <Character playerImg={getPlayerSVG(2)} />
+            </div>
         </div>
     )
 }
