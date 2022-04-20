@@ -1,8 +1,8 @@
 import React, { useContext } from 'react'
 import { VictoryContext } from '../contexts/VictoryContext'
-import stylesheet from './Pages.module.css'
+import stylesheet from './Game.module.css'
 
-export const Pages = (props) => {
+export const Game = (props) => {
     const { isVictory, won } = useContext(VictoryContext)
     return (
         <div>

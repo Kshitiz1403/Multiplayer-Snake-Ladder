@@ -7,9 +7,9 @@ import stylesheet from './Board.module.css'
 const Board = () => {
 
     const { squareDimension, windowHeight } = useContext(LayoutContext)
-    const {changeWindowHeight} = useContext(DispatchLayoutContext)
+    const { changeWindowHeight } = useContext(DispatchLayoutContext)
 
-    const { location } = useContext(PositionContext)
+    const { myCoordinates, enemyCoordinates } = useContext(PositionContext)
 
     useLayoutEffect(() => {
         const updateSize = () => {
@@ -32,13 +32,27 @@ const Board = () => {
         squares.push(horizontal)
     }
 
-    const Square = ({ square, snakes, laders, styles }) => (
-        <div className={stylesheet.squareStyles} style={{...styles}}>
-            <div style={{ fontSize: squareDimension * 0.25 }}>{location + 1 != square ? square : null}</div>
+    const shouldNumberRender = (myLocation, enemyLocation, squareLocation) => {
+        let boolean = true;
+
+        if (myLocation + 1 == squareLocation) {
+            boolean = false
+        }
+        if (enemyLocation + 1 == squareLocation) {
+            boolean = false
+        }
+        return boolean
+    }
+
+    const Square = ({ squareNumber, snakes, laders, styles }) => (
+        <div className={stylesheet.squareStyles} style={{ ...styles }}>
+            <div style={{ fontSize: squareDimension * 0.25 }}>
+                {shouldNumberRender(myCoordinates.location, enemyCoordinates.location, squareNumber) ? squareNumber : null}
+            </div>
             <div style={{ position: 'absolute', right: 0, bottom: 0 }}>
-                {snakes.map(snake => snake.from == square ? <div style={{ color: 'red', fontSize: squareDimension * 0.25 }} key={snake}>S{snake.to}</div> : null
+                {snakes.map(snake => snake.from == squareNumber ? <div style={{ color: 'red', fontSize: squareDimension * 0.25 }} key={snake}>S{snake.to}</div> : null
                 )}
-                {laders.map(lader => lader.from == square ? <div style={{ color: 'blue', fontSize: squareDimension * 0.25 }} key={lader}>L{lader.to}</div> : null)}
+                {laders.map(lader => lader.from == squareNumber ? <div style={{ color: 'blue', fontSize: squareDimension * 0.25 }} key={lader}>L{lader.to}</div> : null)}
             </div>
         </div>
     )
@@ -48,13 +62,13 @@ const Board = () => {
             <div style={{ height: windowHeight, aspectRatio: 1 }}>
                 {squares.map((horizontalArr, horIndex) =>
                     <div className={stylesheet.horizontalStyles} key={horIndex}>
-                        {horizontalArr.map((square, index) =>
+                        {horizontalArr.map((squareNumber, index) =>
                             <Square
                                 key={horIndex * 10 + index}
                                 styles={{ aspectRatio: 1, width: '100%', backgroundColor: (horIndex % 2 == 0 && index % 2 == 1) ? '#ffef85' : (horIndex % 2 == 1 && index % 2 == 0) ? '#ffef85' : '#f9a500' }}
                                 snakes={snakes}
                                 laders={laders}
-                                square={square}
+                                squareNumber={squareNumber}
                             />
                         )}
                     </div>)}

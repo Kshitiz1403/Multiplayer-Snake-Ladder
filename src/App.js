@@ -4,22 +4,34 @@ import { LayoutProvider } from './contexts/LayoutContext';
 import { PositionProvider } from './contexts/PositionContext';
 import Player from './Player/Player';
 import { VictoryProvider } from './contexts/VictoryContext';
-import { Pages } from './Pages/Pages';
+import { Game } from './Game/Game';
 import './App.css'
+import io from 'socket.io-client';
+import { useEffect } from 'react';
+import { JoinRoom } from './JoinRoom';
+import { UserProvider } from './contexts/UserContext';
+import StartGame from './StartGame';
 
-
+export const socket = io('http://localhost:5000')
 function App() {
+  useEffect(() => {
+    // socket.on('init', (msg) => {
+    //   console.log(msg)
+    // })
+    // socket.on('msg', msg =>
+    //   console.log(msg))
+    
+  }, [])
+
   return (
     <div className='App'>
       <LayoutProvider>
         <PositionProvider>
-          <VictoryProvider>
-            <Pages>
-              <Board />
-              <Player />
-              <Dice />
-            </Pages>
-          </VictoryProvider>
+          <UserProvider>
+            <VictoryProvider>
+              <StartGame />
+            </VictoryProvider>
+          </UserProvider>
         </PositionProvider>
       </LayoutProvider>
     </div>
