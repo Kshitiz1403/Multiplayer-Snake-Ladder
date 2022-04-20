@@ -8,10 +8,12 @@ import dice5 from '../assets/dice/dice-five.svg'
 import dice6 from '../assets/dice/dice-six.svg'
 import { DispatchPositionContext } from '../contexts/PositionContext'
 import stylesheet from './Dice.module.css'
+import { UserContext } from '../contexts/UserContext'
 
 const Dice = () => {
 
     const { dispatchDice } = useContext(DispatchPositionContext)
+    const { thisTurnPlayerID, myPlayerNumber } = useContext(UserContext)
 
     const getDice = () => {
         const value = getValue()
@@ -47,9 +49,15 @@ const Dice = () => {
 
     return (
         <div className={stylesheet.container}>
-            <div onClick={rollDice}>
-                <img src={activeDice} width='200px' />
-            </div>
+            {thisTurnPlayerID != myPlayerNumber ?
+                <div>
+                    Wait for opponent's turn
+                </div>
+                :
+                <div onClick={rollDice}>
+                    <img src={activeDice} width='200px' />
+                </div>
+            }
         </div>
     )
 }

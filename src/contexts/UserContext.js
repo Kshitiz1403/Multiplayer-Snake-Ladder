@@ -1,33 +1,16 @@
 import React, { createContext, useEffect, useState } from 'react'
 export const UserContext = createContext()
 
+export const switchThisTurnPlayerID = (pid) => {
+    if (pid == 1) return 2
+    if (pid == 2) return 1
+}
 export const UserProvider = (props) => {
     const [roomID, setRoomID] = useState('')
     const [isUserJoined, setIsUserJoined] = useState(false)
-    const [players, setPlayers] = useState(0)
-    const [myPlayerID, setMyPlayerID] = useState(2)
-    const [opponentPlayerID, setOpponentPlayerID] = useState(0)
-
-    const changeRoomID = (room) => {
-        setRoomID(room)
-    }
-    const changePlayers = (player) => {
-        setPlayers(player)
-    }
-    useEffect(() => {
-        let tempMyPlayerID
-        if (players === 1) {
-            tempMyPlayerID = 1
-            setMyPlayerID(1)
-        }
-        if (tempMyPlayerID==1){
-            setOpponentPlayerID(2)
-        }
-        else{
-            setOpponentPlayerID(1)
-        }
-    }, [players])
-
+    const [myPlayerNumber, setMyPlayerNumber] = useState(0)
+    const [enemyPlayerNumber, setEnemyPlayerNumber] = useState(0)
+    const [thisTurnPlayerID, setThisTurnPlayerID] = useState(2)
 
     useEffect(() => {
         if (roomID) {
@@ -35,8 +18,16 @@ export const UserProvider = (props) => {
         }
     }, [roomID])
 
+    useEffect(() => {
+        if (myPlayerNumber == 1) setEnemyPlayerNumber(2)
+        if (myPlayerNumber == 2) setEnemyPlayerNumber(1)
+    }, [myPlayerNumber])
+
+
     return (
-        <UserContext.Provider value={{ roomID, changeRoomID, isUserJoined, players, changePlayers, myPlayerID, opponentPlayerID }}>
+        <UserContext.Provider value={{
+            roomID, setRoomID, myPlayerNumber, setMyPlayerNumber, enemyPlayerNumber, isUserJoined, thisTurnPlayerID, setThisTurnPlayerID
+        }}>
             {props.children}
         </UserContext.Provider>
     )

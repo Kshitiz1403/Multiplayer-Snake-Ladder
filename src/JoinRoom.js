@@ -5,19 +5,21 @@ import { UserContext } from './contexts/UserContext'
 
 export const JoinRoom = () => {
 
-    const { changeRoomID, roomID, players, changePlayers } = useContext(UserContext);
+    const { roomID, setRoomID, setMyPlayerNumber } = useContext(UserContext);
 
     const [tempRoomID, setTempRoomID] = useState('')
     const [tempUserName, setTempUserName] = useState('')
 
     const joinOrCreateRoom = (tempUserName, tempRoomID) => {
         socket.emit('join_room', { userName: tempUserName, room: tempRoomID })
-        changeRoomID(tempRoomID)
-        socket.on('roomUsers', data=>console.log(data))
-        // socket.emit('updates', -1, 1)
-    }
+        setRoomID(tempRoomID)
 
-    // socket.on('total', data => changePlayers(data.length))
+        socket.on('roomUsers', data => {
+            const user = data.users.find(user => user.id === socket.id)
+            setMyPlayerNumber(user.playerNumber)
+        })
+
+    }
 
 
     return (
