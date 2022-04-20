@@ -1,4 +1,4 @@
-import React, { createContext, useEffect, useReducer, useState } from 'react'
+import React, { createContext, useReducer, useState } from 'react'
 import diceReducer from '../reducers/diceReducer';
 
 export const PositionContext = createContext();

@@ -6,7 +6,7 @@ import { Game } from './Game/Game'
 import { JoinRoom } from './JoinRoom'
 import Player from './Player/Player'
 
-const StartGame = (props) => {
+const StartGame = () => {
     const { isUserJoined } = useContext(UserContext)
     return (
         <div>
