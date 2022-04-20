@@ -1,11 +1,6 @@
-const movementReducer = (state, action) => {
-    let {location} = state
-    let {horizontal} = state
-    let {vertical} = state
-    let diceValue = action.diceValue
-    let snakes = action.snakes
-    let laders = action.laders
+export const paintGame = ({ location, diceValue, snakes, laders, horizontal, vertical }) => {
     let newLocation
+
 
     if (diceValue + location + 1 > 100) {
         return { location, diceValue, horizontal, vertical }
@@ -37,5 +32,3 @@ const movementReducer = (state, action) => {
 
     return { location: newLocation, diceValue, horizontal, vertical }
 }
-
-export default movementReducer

@@ -3,7 +3,7 @@ const diceReducer = (state, action) => {
         case "ADD":
             let prevState = {...state}
             prevState.value = action.value
-            prevState.temp +=1
+            prevState.count +=1
             return prevState
         default:
             return state

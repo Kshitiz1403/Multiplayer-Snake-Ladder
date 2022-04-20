@@ -1,25 +1,27 @@
-import React, { createContext, useReducer, useState } from 'react'
-import coordinateReducer from '../reducers/coordinateReducer';
+import React, { createContext, useEffect, useReducer, useState } from 'react'
 import diceReducer from '../reducers/diceReducer';
-import movementReducer from '../reducers/movementReducer';
 
 export const PositionContext = createContext();
 export const DispatchPositionContext = createContext();
 
 export const PositionProvider = (props) => {
-    const [dice, dispatchDice] = useReducer(diceReducer, { value: 0, temp: 0 })
-    const [location, dispatchLocation] = useReducer(movementReducer, -1)
-    // const [coordinates, setCoordinates] = useState({ horizontal: -1, vertical: 0 })
+  const [dice, dispatchDice] = useReducer(diceReducer, { value: 0, count: 0 })
 
-    // const updateCoordinates = (horizontal, vertical) => {
-    //     setCoordinates({ horizontal, vertical })
-    // }
-    const [coordinates, dispatchCoordinates] = useReducer(coordinateReducer, { horizontal: -1, vertical: 0 })
-    return (
-        <PositionContext.Provider value={{ dice, location, coordinates }}>
-            <DispatchPositionContext.Provider value={{ dispatchDice, dispatchLocation, dispatchCoordinates }}>
-                {props.children}
-            </DispatchPositionContext.Provider>
-        </PositionContext.Provider>
-    )
+  const [myCoordinates, setMyCoordinates] = useState({ location: -1, diceValue: 0, horizontal: -1, vertical: 0 })
+  const [enemyCoordinates, setEnemyCoordinates] = useState({ location: -1, diceValue: 0, horizontal: -1, vertical: 0 })
+
+  const changeEnemyCoordinates = (val) => {
+    setEnemyCoordinates(val)
+  }
+  const changeMyCoordinates = (val) => {
+    setMyCoordinates(val)
+  }
+
+  return (
+    <PositionContext.Provider value={{ dice, myCoordinates, enemyCoordinates }}>
+      <DispatchPositionContext.Provider value={{ dispatchDice, changeEnemyCoordinates, changeMyCoordinates }}>
+        {props.children}
+      </DispatchPositionContext.Provider>
+    </PositionContext.Provider>
+  )
 }
