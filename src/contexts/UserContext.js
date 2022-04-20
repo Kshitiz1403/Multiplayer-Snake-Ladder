@@ -1,10 +1,6 @@
 import React, { createContext, useEffect, useState } from 'react'
 export const UserContext = createContext()
 
-export const switchThisTurnPlayerID = (pid) => {
-    if (pid == 1) return 2
-    if (pid == 2) return 1
-}
 export const UserProvider = (props) => {
     const [roomID, setRoomID] = useState('')
     const [isUserJoined, setIsUserJoined] = useState(false)

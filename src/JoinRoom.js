@@ -1,11 +1,10 @@
-import React, { useContext, useEffect, useState } from 'react'
-import { io } from 'socket.io-client';
+import React, { useContext, useState } from 'react'
 import { socket } from './App'
 import { UserContext } from './contexts/UserContext'
 
 export const JoinRoom = () => {
 
-    const { roomID, setRoomID, setMyPlayerNumber } = useContext(UserContext);
+    const { setRoomID, setMyPlayerNumber } = useContext(UserContext);
 
     const [tempRoomID, setTempRoomID] = useState('')
     const [tempUserName, setTempUserName] = useState('')

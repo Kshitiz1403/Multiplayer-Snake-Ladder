@@ -1,17 +1,14 @@
-import React, { useContext, useEffect, useMemo, useRef, useState } from 'react'
-import mummy_head from '../assets/player/mummy-head.svg'
-import cleopatra from '../assets/player/cleopatra.svg'
-import monkey_face from '../assets/player/monk-face.svg'
-import goblin_head from '../assets/player/goblin-head.svg'
-import female_vampire from '../assets/player/female-vampire.svg'
+import React, { useContext, useEffect, useRef } from 'react'
 import { LayoutContext } from '../contexts/LayoutContext'
 import { DispatchPositionContext, PositionContext } from '../contexts/PositionContext'
 import { laders, snakes } from '../config'
 import { VictoryContext } from '../contexts/VictoryContext'
-import { switchThisTurnPlayerID, UserContext } from '../contexts/UserContext'
+import { UserContext } from '../contexts/UserContext'
 import stylesheet from './Player.module.css'
 import { socket } from '../App'
-import { paintGame } from '../paintGame'
+import { paintGame } from '../utils/paintGame'
+import switchThisTurnPlayerID from '../utils/switchThisTurnPlayerID'
+import getPlayerSVG from '../utils/getPlayerSVG'
 
 const Player = () => {
     const { squareDimension } = useContext(LayoutContext)
@@ -20,16 +17,9 @@ const Player = () => {
     const { won } = useContext(VictoryContext)
     const { myPlayerNumber, enemyPlayerNumber, thisTurnPlayerID, setThisTurnPlayerID } = useContext(UserContext)
 
-    const getPlayerSVG = (playerNumber) => {
-        switch (playerNumber) {
-            case 1:
-                return monkey_face
-            case 2:
-                return female_vampire
-        }
-    }
 
     const Character = ({ playerImg }) => (
+        // TO DO -> handle UI for same position enemy and me => center -> left & right
         <div className={stylesheet.character} style={{ width: squareDimension, height: squareDimension, padding: squareDimension * 0.4 }}>
             <img src={playerImg} />
         </div>

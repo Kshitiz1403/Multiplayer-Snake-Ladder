@@ -1,7 +1,8 @@
-import React, { useContext, useEffect, useLayoutEffect, useState } from 'react'
+import React, { useContext, useLayoutEffect } from 'react'
 import { laders, snakes } from '../config'
 import { DispatchLayoutContext, LayoutContext } from '../contexts/LayoutContext'
 import { PositionContext } from '../contexts/PositionContext'
+import shouldNumberRender from '../utils/shouldNumberRender'
 import stylesheet from './Board.module.css'
 
 const Board = () => {
@@ -30,18 +31,6 @@ const Board = () => {
             horizontal.reverse()
         }
         squares.push(horizontal)
-    }
-
-    const shouldNumberRender = (myLocation, enemyLocation, squareLocation) => {
-        let boolean = true;
-
-        if (myLocation + 1 == squareLocation) {
-            boolean = false
-        }
-        if (enemyLocation + 1 == squareLocation) {
-            boolean = false
-        }
-        return boolean
     }
 
     const Square = ({ squareNumber, snakes, laders, styles }) => (
