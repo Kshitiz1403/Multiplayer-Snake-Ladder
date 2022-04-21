@@ -3,7 +3,7 @@ import { VictoryContext } from '../contexts/VictoryContext'
 import stylesheet from './Game.module.css'
 
 export const Game = (props) => {
-    const { isVictory, won } = useContext(VictoryContext)
+    const { isVictory } = useContext(VictoryContext)
     return (
         <div>
             {isVictory ? <h1 className={stylesheet.victoryContainer}>Congratulations!</h1> : null}

@@ -16,8 +16,8 @@ export const UserProvider = (props) => {
     }, [roomID])
 
     useEffect(() => {
-        if (myPlayerNumber == 1) setEnemyPlayerNumber(2)
-        if (myPlayerNumber == 2) setEnemyPlayerNumber(1)
+        if (myPlayerNumber === 1) setEnemyPlayerNumber(2)
+        if (myPlayerNumber === 2) setEnemyPlayerNumber(1)
     }, [myPlayerNumber])
 
 

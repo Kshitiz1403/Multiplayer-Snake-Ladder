@@ -15,6 +15,7 @@ const getDiceSVG = (diceNumber) => {
         case 4: return dice4
         case 5: return dice5
         case 6: return dice6
+        default: return dice0
     }
 }
 
