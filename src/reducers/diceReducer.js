@@ -1,10 +1,10 @@
 const diceReducer = (state, action) => {
     switch (action.type) {
-        case "ADD":
-            let prevState = {...state}
-            prevState.value = action.value
-            prevState.count +=1
-            return prevState
+        case "GENERATE":
+            let newState = {...state}
+            newState.value = action.value
+            newState.count +=1
+            return newState
         default:
             return state
     }

@@ -1,10 +1,9 @@
 import React, { useContext, useState } from 'react'
 import { socket } from './App'
-import { DispatchUserContext, UserContext } from './contexts/UserContext'
+import { DispatchUserContext } from './contexts/UserContext'
 
 export const JoinRoom = () => {
 
-    // const {  } = useContext(UserContext);
     const {setMyPlayerNumber, setRoomID} = useContext(DispatchUserContext)
 
     const [tempRoomID, setTempRoomID] = useState('')

@@ -16,19 +16,18 @@ export const UserProvider = (props) => {
     }, [roomID])
 
     useEffect(() => {
-        if (myPlayerNumber == 1) setEnemyPlayerNumber(2)
-        if (myPlayerNumber == 2) setEnemyPlayerNumber(1)
+        if (myPlayerNumber === 1) setEnemyPlayerNumber(2)
+        if (myPlayerNumber === 2) setEnemyPlayerNumber(1)
     }, [myPlayerNumber])
 
 
     return (
         <UserContext.Provider value={{
-            roomID,  myPlayerNumber, enemyPlayerNumber, isUserJoined, thisTurnPlayerID
+            roomID, myPlayerNumber, enemyPlayerNumber, isUserJoined, thisTurnPlayerID
         }}>
             <DispatchUserContext.Provider value={{ setRoomID, setMyPlayerNumber, setThisTurnPlayerID }}>
-
+                {props.children}
             </DispatchUserContext.Provider>
-            {props.children}
         </UserContext.Provider>
     )
 }

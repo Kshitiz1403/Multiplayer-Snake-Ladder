@@ -19,10 +19,10 @@ const Player = () => {
     const { setThisTurnPlayerID } = useContext(DispatchUserContext)
 
 
-    const Character = ({ playerImg }) => (
+    const Avatar = ({ playerImg }) => (
         // TO DO -> handle UI for same position enemy and me => center -> left & right
         <div className={stylesheet.character} style={{ width: squareDimension, height: squareDimension, padding: squareDimension * 0.4 }}>
-            <img src={playerImg} />
+            <img src={playerImg} alt='player-avatar'/>
         </div>
     )
 
@@ -43,11 +43,6 @@ const Player = () => {
 
     }, [dice])
 
-    useEffect(() => {
-
-        console.log(`I am player ${myPlayerNumber}`)
-    }, [myPlayerNumber])
-
 
     useEffect(() => {
         const receiveHandler = ({ location, dice, this_turn }) => {
@@ -65,23 +60,22 @@ const Player = () => {
 
     useEffect(() => {
         // TO DO -> handle popup with {username, victory}
-        if (myCoordinates.location == 99) won()
+        if (myCoordinates.location === 99) won()
 
     }, [myCoordinates])
 
     useEffect(() => {
         // TO DO -> handle popup with {username, victory}
-        if (enemyCoordinates.location == 99) won()
+        if (enemyCoordinates.location === 99) won()
     }, [enemyCoordinates])
 
     return (
         <div>
-
             <div className={stylesheet.container} style={{ bottom: squareDimension * myCoordinates.vertical, left: squareDimension * myCoordinates.horizontal }}>
-                <Character playerImg={getPlayerSVG(myPlayerNumber)} />
+                <Avatar playerImg={getPlayerSVG(myPlayerNumber)} />
             </div>
             <div className={stylesheet.container} style={{ bottom: squareDimension * enemyCoordinates.vertical, left: squareDimension * enemyCoordinates.horizontal }}>
-                <Character playerImg={getPlayerSVG(enemyPlayerNumber)} />
+                <Avatar playerImg={getPlayerSVG(enemyPlayerNumber)} />
             </div>
         </div>
     )
