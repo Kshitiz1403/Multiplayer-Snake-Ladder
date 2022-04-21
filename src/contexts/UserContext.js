@@ -23,12 +23,11 @@ export const UserProvider = (props) => {
 
     return (
         <UserContext.Provider value={{
-            roomID,  myPlayerNumber, enemyPlayerNumber, isUserJoined, thisTurnPlayerID
+            roomID, myPlayerNumber, enemyPlayerNumber, isUserJoined, thisTurnPlayerID
         }}>
             <DispatchUserContext.Provider value={{ setRoomID, setMyPlayerNumber, setThisTurnPlayerID }}>
-
+                {props.children}
             </DispatchUserContext.Provider>
-            {props.children}
         </UserContext.Provider>
     )
 }
