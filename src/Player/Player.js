@@ -3,7 +3,7 @@ import { LayoutContext } from '../contexts/LayoutContext'
 import { DispatchPositionContext, PositionContext } from '../contexts/PositionContext'
 import { laders, snakes } from '../config'
 import { VictoryContext } from '../contexts/VictoryContext'
-import { UserContext } from '../contexts/UserContext'
+import { DispatchUserContext, UserContext } from '../contexts/UserContext'
 import stylesheet from './Player.module.css'
 import { socket } from '../App'
 import { paintGame } from '../utils/paintGame'
@@ -15,7 +15,8 @@ const Player = () => {
     const { dice, myCoordinates, enemyCoordinates } = useContext(PositionContext)
     const { changeEnemyCoordinates, changeMyCoordinates } = useContext(DispatchPositionContext)
     const { won } = useContext(VictoryContext)
-    const { myPlayerNumber, enemyPlayerNumber, thisTurnPlayerID, setThisTurnPlayerID } = useContext(UserContext)
+    const { myPlayerNumber, enemyPlayerNumber, thisTurnPlayerID } = useContext(UserContext)
+    const { setThisTurnPlayerID } = useContext(DispatchUserContext)
 
 
     const Character = ({ playerImg }) => (
@@ -29,7 +30,7 @@ const Player = () => {
 
     useEffect(() => {
         if (!mounted.current) mounted.current = true
-        else{
+        else {
             const { location, diceValue, horizontal, vertical } = paintGame({ location: myCoordinates.location, diceValue: dice.value, snakes, laders, horizontal: myCoordinates.horizontal, vertical: myCoordinates.vertical })
 
             const switchedID = switchThisTurnPlayerID(thisTurnPlayerID)
