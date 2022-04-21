@@ -13,7 +13,7 @@ import getPlayerSVG from '../utils/getPlayerSVG'
 const Player = () => {
     const { squareDimension } = useContext(LayoutContext)
     const { dice, myCoordinates, enemyCoordinates } = useContext(PositionContext)
-    const { changeEnemyCoordinates, changeMyCoordinates } = useContext(DispatchPositionContext)
+    const { changeEnemyCoordinates, changeMyCoordinates, setReceivedDice } = useContext(DispatchPositionContext)
     const { won } = useContext(VictoryContext)
     const { myPlayerNumber, enemyPlayerNumber, thisTurnPlayerID } = useContext(UserContext)
     const { setThisTurnPlayerID } = useContext(DispatchUserContext)
@@ -50,6 +50,8 @@ const Player = () => {
             let paintData = paintGame({ location, diceValue: dice, snakes, laders, horizontal: enemyCoordinates.horizontal, vertical: enemyCoordinates.vertical })
             changeEnemyCoordinates({ location: paintData.location, diceValue: paintData.diceValue, horizontal: paintData.horizontal, vertical: paintData.vertical })
 
+            setReceivedDice(dice)
+            
             setThisTurnPlayerID(this_turn)
         }
         socket.on('receive-update', receiveHandler);
