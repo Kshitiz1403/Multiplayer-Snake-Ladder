@@ -1,5 +1,6 @@
 import React, { createContext, useEffect, useState } from 'react'
 export const UserContext = createContext()
+export const DispatchUserContext = createContext()
 
 export const UserProvider = (props) => {
     const [roomID, setRoomID] = useState('')
@@ -22,8 +23,11 @@ export const UserProvider = (props) => {
 
     return (
         <UserContext.Provider value={{
-            roomID, setRoomID, myPlayerNumber, setMyPlayerNumber, enemyPlayerNumber, isUserJoined, thisTurnPlayerID, setThisTurnPlayerID
+            roomID,  myPlayerNumber, enemyPlayerNumber, isUserJoined, thisTurnPlayerID
         }}>
+            <DispatchUserContext.Provider value={{ setRoomID, setMyPlayerNumber, setThisTurnPlayerID }}>
+
+            </DispatchUserContext.Provider>
             {props.children}
         </UserContext.Provider>
     )
