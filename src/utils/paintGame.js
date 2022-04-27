@@ -6,22 +6,22 @@ export const paintGame = ({ location, diceValue, snakes, laders, horizontal, ver
         return { location, diceValue, horizontal, vertical }
     }
 
-    let boolean = false
+    let landedOnSnakeOrLadder = false
     for (const snake of snakes) {
         if (diceValue + location + 1 === snake.from) {
             newLocation = snake.to - 1
-            boolean = true
+            landedOnSnakeOrLadder = true
             break
         }
     }
     for (const lader of laders) {
         if (diceValue + location + 1 === lader.from) {
             newLocation = lader.to - 1
-            boolean = true
+            landedOnSnakeOrLadder = true
             break
         }
     }
-    if (boolean) {
+    if (landedOnSnakeOrLadder) {
 
     } else {
         newLocation = location + diceValue
