@@ -9,22 +9,15 @@ import { socket } from '../App'
 import { paintGame } from '../utils/paintGame'
 import switchThisTurnPlayerID from '../utils/switchThisTurnPlayerID'
 import getPlayerSVG from '../utils/getPlayerSVG'
+import Avatar from './Avatar'
 
 const Player = () => {
     const { squareDimension } = useContext(LayoutContext)
     const { dice, myCoordinates, enemyCoordinates } = useContext(PositionContext)
     const { changeEnemyCoordinates, changeMyCoordinates, setReceivedDice } = useContext(DispatchPositionContext)
     const { won } = useContext(VictoryContext)
-    const { myPlayerNumber, enemyPlayerNumber, thisTurnPlayerID } = useContext(UserContext)
+    const { myPlayerNumber, enemyPlayerNumber, thisTurnPlayerID, myPlayerName, enemyPlayerName } = useContext(UserContext)
     const { setThisTurnPlayerID } = useContext(DispatchUserContext)
-
-
-    const Avatar = ({ playerImg }) => (
-        // TO DO -> handle UI for same position enemy and me => center -> left & right
-        <div className={stylesheet.character} style={{ width: squareDimension, height: squareDimension, padding: squareDimension * 0.4 }}>
-            <img src={playerImg} alt='player-avatar'/>
-        </div>
-    )
 
     const mounted = useRef(false)
 
@@ -51,7 +44,7 @@ const Player = () => {
             changeEnemyCoordinates({ location: paintData.location, diceValue: paintData.diceValue, horizontal: paintData.horizontal, vertical: paintData.vertical })
 
             setReceivedDice(dice)
-            
+
             setThisTurnPlayerID(this_turn)
         }
         socket.on('receive-update', receiveHandler);
@@ -61,14 +54,12 @@ const Player = () => {
 
 
     useEffect(() => {
-        // TO DO -> handle popup with {username, victory}
-        if (myCoordinates.location === 99) won()
+        if (myCoordinates.location === 99) won(myPlayerNumber, myPlayerName)
 
     }, [myCoordinates])
 
     useEffect(() => {
-        // TO DO -> handle popup with {username, victory}
-        if (enemyCoordinates.location === 99) won()
+        if (enemyCoordinates.location === 99) won(enemyPlayerNumber, enemyPlayerName)
     }, [enemyCoordinates])
 
     return (

@@ -3,12 +3,12 @@ import React, { createContext, useState } from 'react'
 export const VictoryContext = createContext();
 
 export const VictoryProvider = (props) => {
-    const [isVictory, setIsVictory] = useState(false)
-    const won = () => {
-        setIsVictory(true)
+    const [victoryState, setIsVictoryState] = useState({ playerNumber: -1, playerName: "", status: false })
+    const won = (playerNumber, playerName) => {
+        setIsVictoryState({ playerNumber: playerNumber, playerName: playerName, status: true })
     }
     return (
-        <VictoryContext.Provider value={{ isVictory, won }}>
+        <VictoryContext.Provider value={{ victoryState, won }}>
             {props.children}
         </VictoryContext.Provider>
     )
