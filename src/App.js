@@ -6,7 +6,7 @@ import io from 'socket.io-client';
 import { UserProvider } from './contexts/UserContext';
 import StartGame from './StartGame';
 
-export const socket = io('http://localhost:5000')
+export const socket = io('/')
 function App() {
 
   return (

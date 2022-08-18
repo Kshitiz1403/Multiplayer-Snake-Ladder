@@ -7,6 +7,8 @@ export const UserProvider = (props) => {
     const [isUserJoined, setIsUserJoined] = useState(false)
     const [myPlayerNumber, setMyPlayerNumber] = useState(0)
     const [enemyPlayerNumber, setEnemyPlayerNumber] = useState(0)
+    const [myPlayerName, setMyPlayerName] = useState('')
+    const [enemyPlayerName, setEnemyPlayerName] = useState('')
     const [thisTurnPlayerID, setThisTurnPlayerID] = useState(2)
 
     useEffect(() => {
@@ -20,12 +22,18 @@ export const UserProvider = (props) => {
         if (myPlayerNumber === 2) setEnemyPlayerNumber(1)
     }, [myPlayerNumber])
 
+    useEffect(() => {
+        console.log("myPlayerName",myPlayerName)
+        console.log("enemyPlayerName",enemyPlayerName)
+    }, [myPlayerName, enemyPlayerName])
+
+
 
     return (
         <UserContext.Provider value={{
-            roomID, myPlayerNumber, enemyPlayerNumber, isUserJoined, thisTurnPlayerID
+            roomID, myPlayerNumber, enemyPlayerNumber, isUserJoined, thisTurnPlayerID, myPlayerName,enemyPlayerName
         }}>
-            <DispatchUserContext.Provider value={{ setRoomID, setMyPlayerNumber, setThisTurnPlayerID }}>
+            <DispatchUserContext.Provider value={{ setRoomID, setMyPlayerNumber, setThisTurnPlayerID, setMyPlayerName,setEnemyPlayerName }}>
                 {props.children}
             </DispatchUserContext.Provider>
         </UserContext.Provider>
