@@ -54,7 +54,7 @@ const Board = () => {
                         {horizontalArr.map((squareNumber, index) =>
                             <Square
                                 key={horIndex * 10 + index}
-                                styles={{ aspectRatio: 1, width: '100%', backgroundColor: (horIndex % 2 === 0 && index % 2 === 1) ? '#ffef85' : (horIndex % 2 === 1 && index % 2 === 0) ? '#ffef85' : '#f9a500' }}
+                                styles={{ aspectRatio: 1, width: '100%', backgroundColor: (horIndex % 2 === 0 && index % 2 === 1) ? '#a8ce3b' : (horIndex % 2 === 1 && index % 2 === 0) ? '#a8ce3b' : '#00a652' }}
                                 snakes={snakes}
                                 laders={laders}
                                 squareNumber={squareNumber}
