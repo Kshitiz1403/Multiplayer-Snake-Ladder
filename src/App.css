@@ -1,4 +1,12 @@
-html{
-    overflow-y: hidden;
-    max-height: 100vh;
+html {
+  overflow-y: hidden;
+  max-height: 100vh;
+}
+.MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline {
+  border-color: #858c94 !important;
+}
+
+* {
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    "Lucida Sans", Arial, sans-serif;
 }

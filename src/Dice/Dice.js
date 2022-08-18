@@ -9,7 +9,7 @@ const Dice = () => {
 
     const { dice, receivedDice } = useContext(PositionContext)
     const { dispatchDice } = useContext(DispatchPositionContext)
-    const { thisTurnPlayerID, myPlayerNumber } = useContext(UserContext)
+    const { thisTurnPlayerID, myPlayerNumber, enemyPlayerNumber, myPlayerName, enemyPlayerName } = useContext(UserContext)
 
     const rollDice = async () => {
         const dice = generateDiceValue()
@@ -27,8 +27,19 @@ const Dice = () => {
 
     return (
         <div className={stylesheet.container}>
+            <div style={{ display: 'flex', flexDirection: 'column',  height:200,  justifyContent:'space-evenly'}}>
+                <div style={{ display: 'flex',  alignItems: 'center', color:'white' }}>
+                    <div style={{ height: 20, width: 20, borderRadius: 10, background: "red", marginRight:10 }}></div>
+                    <div>{myPlayerNumber == 1 ? myPlayerName : enemyPlayerName}</div>
+                </div>
+                <div style={{ display: 'flex',  alignItems: 'center', color:'white' }}>
+                    <div style={{ height: 20, width: 20, borderRadius: 10, background: "blue", marginRight:10 }}></div>
+                    <div>{myPlayerNumber == 2 ? myPlayerName : enemyPlayerName}</div>
+                </div>
+                {/* <div style={{ display: 'flex', height: 50, width: 50, backgroundColor: "white" }}></div> */}
+            </div>
             {thisTurnPlayerID != myPlayerNumber ?
-                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' , color:'white'}}>
                     <div>
                         {dice.value !== 0 ? `You rolled ${dice.value}` : null}
                     </div>
@@ -37,9 +48,9 @@ const Dice = () => {
                     </div>
                 </div>
                 :
-                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', color:"white" }}>
                     <div onClick={rollDice}>
-                        <img src={activeDice} width='200px' />
+                        <img src={activeDice} width='75px' />
                     </div>
                     <div>{receivedDice !== 0 ? <div>Opponent rolled {receivedDice}</div> : null}</div>
                 </div>

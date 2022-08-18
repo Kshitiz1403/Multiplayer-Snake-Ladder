@@ -3,4 +3,7 @@
     flex-direction: column;
     align-items: center;
     width: 100%;
+    background-color: #0e1525;
+    font-size: large;
+    /* justify-content: center; */
 }
