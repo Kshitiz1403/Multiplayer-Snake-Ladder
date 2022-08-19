@@ -10,7 +10,7 @@ const __dirname = dirname(__filename);
 
 const PORT = process.env.PORT || 5000
 
-app.use(express.static(__dirname +  '\\..\\Client\\build'))
+app.use(express.static(__dirname +  '/../client/build'))
 
 const server = app.listen(PORT, () => console.log('listening at',PORT))
 
