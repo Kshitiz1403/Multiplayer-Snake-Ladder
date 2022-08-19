@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useRef } from 'react'
 import { LayoutContext } from '../contexts/LayoutContext'
 import { DispatchPositionContext, PositionContext } from '../contexts/PositionContext'
-import { laders, snakes } from '../config'
+import { laders, snakes } from '../configuration'
 import { VictoryContext } from '../contexts/VictoryContext'
 import { DispatchUserContext, UserContext } from '../contexts/UserContext'
 import stylesheet from './Player.module.css'
