@@ -27,19 +27,18 @@ const Dice = () => {
 
     return (
         <div className={stylesheet.container}>
-            <div style={{ display: 'flex', flexDirection: 'column',  height:200,  justifyContent:'space-evenly'}}>
-                <div style={{ display: 'flex',  alignItems: 'center', color:'white' }}>
-                    <div style={{ height: 20, width: 20, borderRadius: 10, background: "red", marginRight:10 }}></div>
+            <div className={stylesheet.box}>
+                <div className={stylesheet.boxItem}>
+                    <div className={stylesheet.circle} style={{ background: "red" }}></div>
                     <div>{myPlayerNumber == 1 ? myPlayerName : enemyPlayerName}</div>
                 </div>
-                <div style={{ display: 'flex',  alignItems: 'center', color:'white' }}>
-                    <div style={{ height: 20, width: 20, borderRadius: 10, background: "blue", marginRight:10 }}></div>
+                <div className={stylesheet.boxItem}>
+                    <div className={stylesheet.circle} style={{ background: "blue" }}></div>
                     <div>{myPlayerNumber == 2 ? myPlayerName : enemyPlayerName}</div>
                 </div>
-                {/* <div style={{ display: 'flex', height: 50, width: 50, backgroundColor: "white" }}></div> */}
             </div>
             {thisTurnPlayerID != myPlayerNumber ?
-                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' , color:'white'}}>
+                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', color: 'white' }}>
                     <div>
                         {dice.value !== 0 ? `You rolled ${dice.value}` : null}
                     </div>
@@ -48,7 +47,7 @@ const Dice = () => {
                     </div>
                 </div>
                 :
-                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', color:"white" }}>
+                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', color: "white" }}>
                     <div onClick={rollDice}>
                         <img src={activeDice} width='75px' />
                     </div>
