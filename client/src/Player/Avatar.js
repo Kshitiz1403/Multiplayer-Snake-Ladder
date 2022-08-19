@@ -7,8 +7,8 @@ const Avatar = ({ playerImg }) => {
     const { squareDimension } = useContext(LayoutContext)
 
     // TO DO -> handle UI for same position enemy and me => center -> left & right
-    return <div className={stylesheet.character} style={{ width: squareDimension, height: squareDimension, padding: squareDimension * 0.4 }}>
-        <img src={playerImg} alt='player-avatar' />
+    return <div className={stylesheet.character} style={{ width: squareDimension, height: squareDimension }}>
+        <img src={playerImg} alt='player-avatar' style={{ padding: 0.125 * squareDimension }} />
     </div>
 }
 
